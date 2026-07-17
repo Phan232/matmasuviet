@@ -30,3 +30,5 @@ await writeFile(
 `,
   'utf8'
 );
+
+await writeFile(resolve(distDir, '.nojekyll'), '', 'utf8');

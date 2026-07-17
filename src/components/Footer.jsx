@@ -87,15 +87,15 @@ export default function Footer({ setCurrentScreen }) {
             <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '12px', fontSize: '0.85rem', color: 'rgba(255,253,249,0.8)' }}>
               <li style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
                 <MapPin size={16} style={{ color: 'var(--accent-gold)', flexShrink: 0, marginTop: '2px' }} />
-                <span>Đại học Sư phạm Hà Nội, Đường Xuân Thủy, Cầu Giấy, Hà Nội</span>
+                <span>Phường Dĩnh Uyên, Phường Tân Tiến, Tỉnh Bắc Ninh</span>
               </li>
               <li style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                 <Phone size={16} style={{ color: 'var(--accent-gold)' }} />
-                <span>+84 24 1234 5678</span>
+                <a href="tel:0378749472" style={{ color: 'rgba(255,253,249,0.8)' }}>0378749472</a>
               </li>
               <li style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                 <Mail size={16} style={{ color: 'var(--accent-gold)' }} />
-                <span>lienhe@matmasuviet.vn</span>
+                <a href="mailto:Phanbg2003@gmail.com" style={{ color: 'rgba(255,253,249,0.8)' }}>Phanbg2003@gmail.com</a>
               </li>
             </ul>
           </div>
@@ -113,7 +113,7 @@ export default function Footer({ setCurrentScreen }) {
           fontSize: '0.8rem',
           color: 'rgba(255,253,249,0.5)'
         }}>
-          <span>© 2026 Mật Mã Sử Việt. Bảo lưu mọi quyền. Đồ án Thiết kế Game giáo dục lịch sử.</span>
+          <span>© 2026 Mật Mã Sử Việt. Dự án do Át Phan phát triển.</span>
           <div style={{ display: 'flex', gap: '20px' }}>
             <a href="#" style={{ color: 'rgba(255,253,249,0.5)' }}>Điều khoản dịch vụ</a>
             <a href="#" style={{ color: 'rgba(255,253,249,0.5)' }}>Chính sách bảo mật</a>
