@@ -48,6 +48,35 @@ const rankLeaderboard = (rows) =>
     .sort((a, b) => b.score - a.score || a.name.localeCompare(b.name, 'vi'))
     .map((row, index) => ({ ...row, rank: index + 1 }));
 
+const shuffleArray = (items) => {
+  const shuffled = [...items];
+
+  for (let index = shuffled.length - 1; index > 0; index -= 1) {
+    const randomIndex = Math.floor(Math.random() * (index + 1));
+    [shuffled[index], shuffled[randomIndex]] = [shuffled[randomIndex], shuffled[index]];
+  }
+
+  return shuffled;
+};
+
+const createPlaySessionQuiz = (quiz) => ({
+  ...quiz,
+  questions: shuffleArray(quiz.questions).map((question) => {
+    const shuffledOptions = shuffleArray(
+      question.options.map((option, index) => ({
+        option,
+        originalIndex: index
+      }))
+    );
+
+    return {
+      ...question,
+      options: shuffledOptions.map(({ option }) => option),
+      correctIndex: shuffledOptions.findIndex(({ originalIndex }) => originalIndex === question.correctIndex)
+    };
+  })
+});
+
 const mergeInitialQuizzes = (storedQuizzes) => {
   if (!Array.isArray(storedQuizzes)) return INITIAL_QUIZZES;
 
@@ -317,7 +346,9 @@ export default function App() {
 
   // Start Playing a Quiz
   const startQuiz = (quiz) => {
-    setActiveQuiz(quiz);
+    const playSessionQuiz = createPlaySessionQuiz(quiz);
+
+    setActiveQuiz(playSessionQuiz);
     setCurrentQuestionIndex(0);
     setSelectedOption(null);
     setIsAnswered(false);
@@ -327,7 +358,7 @@ export default function App() {
     setHintsRemaining(3);
     
     // Initialize collected keywords as locked placeholders
-    const keywords = quiz.questions.map(q => ({
+    const keywords = playSessionQuiz.questions.map(q => ({
       word: q.keyword,
       unlocked: false
     }));
@@ -374,7 +405,7 @@ export default function App() {
       // To simulate dragging, let's split the keywords
       const words = textMessage.split(' ');
       // Shuffle bank
-      const shuffled = [...words].sort(() => Math.random() - 0.5);
+      const shuffled = shuffleArray(words);
       
       setDecryptionBank(shuffled);
       setDecryptionSlots([]);
@@ -421,7 +452,7 @@ export default function App() {
   const clearDecryption = () => {
     const textMessage = activeQuiz.decryptionMessage;
     const words = textMessage.split(' ');
-    setDecryptionBank(words.sort(() => Math.random() - 0.5));
+    setDecryptionBank(shuffleArray(words));
     setDecryptionSlots([]);
     setDecryptionStatus('idle');
   };
